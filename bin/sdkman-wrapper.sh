@@ -4,4 +4,4 @@
 # This is used to run gvm in Dockerfile RUN commands
 # since the RUN commands does not use interactive shells
 
-[[ -s "//.sdkman/bin/sdkman-init.sh" ]] && source "//.sdkman/bin/sdkman-init.sh" && sdk $@
+[[ -s "//root/.sdkman/bin/sdkman-init.sh" ]] && source "//root/.sdkman/bin/sdkman-init.sh" && sdk $@

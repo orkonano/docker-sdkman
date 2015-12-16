@@ -1,18 +1,22 @@
-FROM tifayuki/java:7
+FROM orconano/java:jdk-8
+
 MAINTAINER Mariano Kfuri <orquito@gmail.com>
 
 ENTRYPOINT ["sdkman-exec.sh"]
 
-# clean apt cache
-RUN apt-get clean
-RUN apt-get update
-RUN apt-get install -y curl unzip
+RUN apt-get update && apt-get install -y curl \
+    unzip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/ 
+
 
 # install sdkman
 RUN curl -s get.sdkman.io | bash
 
-ADD sdkman.config /.sdkman/etc/config
+COPY sdkman.config /.sdkman/etc/config
 
-ADD bin/ /usr/local/bin/
+COPY bin/ /usr/local/bin/
 
-RUN /bin/bash -c "source .sdkman/bin/sdkman-init.sh"
+RUN /bin/bash -c "chmod +x /usr/local/bin/sdkman-exec.sh && chmod +x /usr/local/bin/sdkman-wrapper.sh"
+
+RUN /bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh"
